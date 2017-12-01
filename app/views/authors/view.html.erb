@@ -1,0 +1,114 @@
+<% if @person and displayable?(@person) %>
+  <h1><%= @person.name(["en", "en-US"]) %></h1>
+
+  <a href="#" class="iexpand">Expand</a>
+
+  <h2>Brief Biography</h2>
+
+  <% if @person.getty_uri and @person.getty_subject.scope_note %>
+    <div>
+      <% if @person.dbpedia_resource and @person.dbpedia_resource.thumbnail %>
+        <%= image_tag(@person.dbpedia_resource.thumbnail, width: "200px", alt: "Depiction of #{@person.name}", style: "float: right;") %>
+      <% end %>
+      <p>
+        <strong>Description from Getty Linked Open Data:</strong>
+        <%= @person.getty_subject.scope_note.value %>
+        <% if @person.getty_subject.scope_note.sources.size > 0 %>
+          (Sources: <%= @person.getty_subject.scope_note.sources.map {|source| source.short_title}.join("; ") %>)
+        <% end %>
+      </p>
+      <p class="attribution">
+        <%= link_to @person.getty_uri.to_s, @person.getty_uri.to_s %>
+      </p>
+    </div>
+  <% end %>
+  <% if (@person.wikidata_uri and @person.wikidata_entity.description) or (@person.dbpedia_uri and @person.dbpedia_resource.abstract) %>
+    <% if @person.dbpedia_resource and @person.dbpedia_resource.thumbnail and !(@person.getty_uri and @person.getty_subject.scope_note) %>
+      <%= image_tag(@person.dbpedia_resource.thumbnail, width: "200px", alt: "Depiction of #{@person.name}", style: "float: right;") %>
+    <% end %>
+    <% if @person.dbpedia_uri and @person.dbpedia_resource.abstract %>
+      <p>
+        <strong>Abstract from DBPedia:</strong>
+        <%= @person.dbpedia_resource.abstract %>
+      </p>
+      <p class="attribution">
+        <%= link_to @person.dbpedia_uri.to_s, @person.dbpedia_uri.to_s %>
+      </p>
+    <% else %>
+      <p>
+        <strong>Abstract from Wikidata:</strong>
+        <%= @person.wikidata_entity.description %>
+      </p>
+      <p class="attribution">
+        <%= link_to @person.wikidata_uri.to_s, @person.wikidata_uri.to_s %>
+      </p>
+    <% end %>
+  <% end %>
+  <% if quick_facts?(@person) or (@person.wikidata_entity and @person.wikidata_entity.alma_maters.size > 0) %>
+    <p>
+      <% if @person.birth_date %>
+        <strong>Born:</strong> <%= parse_date(@person.birth_date) %><br>
+      <% end %>
+      <% if @person.death_date %>
+        <strong>Died:</strong> <%= parse_date(@person.death_date) %><br>
+      <% end %>
+      <% if @person.wikidata_uri and @person.wikidata_entity.work_location %>
+        <strong>Worked in:</strong> <%= @person.wikidata_entity.work_location.name %>
+      <% end %>
+    </p>
+
+    <% if @person.wikidata_entity and @person.wikidata_entity.alma_maters.size > 0 %>
+      <h2>Alma Mater<%= @person.wikidata_entity.alma_maters.size > 1 ? "s" : "" %></h2>
+      <p class="attribution">Source: <%= link_to "Wikidata", @person.wikidata_uri.to_s %></p>
+      <% if @person.wikidata_entity.alma_maters.size > 1 %>
+        <ul>
+          <% @person.wikidata_entity.alma_maters.each do |school| %>
+            <li><%= render partial: "school", locals: { school: school } %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><%= render partial: "school", locals: { school: @person.wikidata_entity.alma_maters.first } %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @person.wikidata_uri and @person.wikidata_entity.notable_works.size > 0 %>
+    <h2>Notable Works</h2>
+    <p class="attribution">Source: <%= link_to "Wikidata", @person.wikidata_uri.to_s %></p>
+    <%= render partial: "collection", locals: { collection: @person.wikidata_entity.notable_works } %>
+  <% end %>
+
+  <% if @person.dbpedia_uri and @person.dbpedia_resource.film_appearances.size > 0 %>
+    <h2>Film Appearances</h2>
+    <p class="attribution">Source: <%= link_to "DBPedia", @person.dbpedia_uri.to_s %></p>
+    <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.film_appearances } %>
+  <% end %>
+
+  <% if @person.dbpedia_uri and (@person.dbpedia_resource.influences.size > 0 or @person.dbpedia_resource.influencees.size > 0) %>
+    <h2>Intellectual Network</h2>
+    <p class="attribution">Source: <%= link_to "DBPedia", @person.dbpedia_uri.to_s %></p>
+    <% if @person.dbpedia_resource.influences.size > 0 %>
+      <h3>Influences</h3>
+      <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.influences } %>
+    <% end %>
+    <% if @person.dbpedia_resource.influencees.size > 0 %>
+      <h3>Influenced</h3>
+      <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.influencees } %>
+    <% end %>
+  <% end %>
+
+  <h2>Identities on The Web</h2>
+  <p>
+    <%= link_to @person.loc_uri.to_s, @person.loc_uri.to_s %><br>
+    <%= link_to @person.subject.to_s, @person.subject.to_s %><br>
+    <% if @person.getty_uri %>
+      <%= link_to @person.getty_uri.to_s, @person.getty_uri.to_s %><br>
+    <% end %>
+    <% if @person.wikidata_uri %>
+      <%= link_to @person.wikidata_uri.to_s, @person.wikidata_uri.to_s %><br>
+    <% end %>
+    <% if @person.dbpedia_uri %>
+      <%= link_to @person.dbpedia_uri.to_s, @person.dbpedia_uri.to_s %><br>
+    <% end %>
+  </p>
+<% end %>
