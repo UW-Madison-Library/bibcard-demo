@@ -15,7 +15,6 @@ class LinkedData
     end
   end
 
-
   private
 
   def self.fetch_person_data(lcnaf_uri)
