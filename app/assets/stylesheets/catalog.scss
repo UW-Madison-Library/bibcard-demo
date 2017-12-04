@@ -1,0 +1,39 @@
+// Place all the styles related to the catalog controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.publication {
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin-left: 0;
+    border-bottom: 1px solid #ccc;
+
+    .pub_title {
+      text-transform: uppercase;
+      font-weight: bold;
+      width: 20%;
+      vertical-align: top;
+      margin: 10px auto;
+      display: inline-block;
+    }
+
+    .pub_desc {
+      margin: 0em;
+      padding: 0;
+      width: 70%;
+      display: inline-block;
+      vertical-align: top;
+      margin: 10px auto;
+      list-style: none;
+    }
+  }
+}
+
+.bib-cards {
+  font-size: 0.9em;
+  padding: 2em;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}

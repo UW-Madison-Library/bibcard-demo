@@ -1,8 +1,6 @@
 <% if @person and displayable?(@person) %>
   <h1><%= @person.name(["en", "en-US"]) %></h1>
 
-  <a href="#" class="iexpand">Expand</a>
-
   <h2>Brief Biography</h2>
 
   <% if @person.getty_uri and @person.getty_subject.scope_note %>
