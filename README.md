@@ -1,28 +1,19 @@
-== README
+# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Rails app demonstrates the use of the [BibCard](https://github.com/UW-Madison-Library/bibcard) gem.
 
-Things you may want to cover:
+## Installation
 
-* Ruby version
+```bash
+$ git clone https://github.com/UW-Madison-Library/bibcard-demo
+$ cd bibcard-demo
+$ bundle install
+$ bin/rails s
+```
 
-* System dependencies
+Point your browser at:
 
-* Configuration
+* [View a single author card](http://localhost:3000/authors/n78086005)
+* [View multiple author cards in a faux library catalog display](http://localhost:3000/catalog/123)
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Any Library of Congress Name Authority File (LCNAF) identifier should work for the first link. The latter link will only display bibliographic details for a specific book at the identities associated with it (Gertrude Stein and Pablo Picasso).
