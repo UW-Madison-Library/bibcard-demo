@@ -1,18 +1,18 @@
-<% if @person and displayable?(@person) %>
+<% if @person and displayable? %>
   <h1><%= @person.name(["en", "en-US"]) %></h1>
 
   <h2>Brief Biography</h2>
 
-  <% if @person.getty_uri and @person.getty_subject.scope_note %>
+  <% if has_getty_scope_note? %>
     <div>
-      <% if @person.dbpedia_resource and @person.dbpedia_resource.thumbnail %>
+      <% if has_dbpedia_thumbnail? %>
         <%= image_tag(@person.dbpedia_resource.thumbnail, width: "200px", alt: "Depiction of #{@person.name}", style: "float: right;") %>
       <% end %>
       <p>
         <strong>Description from Getty Linked Open Data:</strong>
         <%= @person.getty_subject.scope_note.value %>
         <% if @person.getty_subject.scope_note.sources.size > 0 %>
-          (Sources: <%= @person.getty_subject.scope_note.sources.map {|source| source.short_title}.join("; ") %>)
+          (Sources: <%= @person.getty_subject.scope_note.sources.map(&:short_title).join("; ") %>)
         <% end %>
       </p>
       <p class="attribution">
@@ -20,11 +20,14 @@
       </p>
     </div>
   <% end %>
-  <% if (@person.wikidata_uri and @person.wikidata_entity.description) or (@person.dbpedia_uri and @person.dbpedia_resource.abstract) %>
-    <% if @person.dbpedia_resource and @person.dbpedia_resource.thumbnail and !(@person.getty_uri and @person.getty_subject.scope_note) %>
+
+  <% if has_wikidata_description? or has_dbpedia_abstract? %>
+
+    <% if has_dbpedia_thumbnail? and ! has_getty_scope_note? %>
       <%= image_tag(@person.dbpedia_resource.thumbnail, width: "200px", alt: "Depiction of #{@person.name}", style: "float: right;") %>
     <% end %>
-    <% if @person.dbpedia_uri and @person.dbpedia_resource.abstract %>
+
+    <% if has_dbpedia_abstract? %>
       <p>
         <strong>Abstract from DBPedia:</strong>
         <%= @person.dbpedia_resource.abstract %>
@@ -42,7 +45,7 @@
       </p>
     <% end %>
   <% end %>
-  <% if quick_facts?(@person) or (@person.wikidata_entity and @person.wikidata_entity.alma_maters.size > 0) %>
+  <% if quick_facts? or has_alma_maters? %>
     <p>
       <% if @person.birth_date %>
         <strong>Born:</strong> <%= parse_date(@person.birth_date) %><br>
@@ -50,13 +53,13 @@
       <% if @person.death_date %>
         <strong>Died:</strong> <%= parse_date(@person.death_date) %><br>
       <% end %>
-      <% if @person.wikidata_uri and @person.wikidata_entity.work_location %>
+      <% if has_wikidata_work_location? %>
         <strong>Worked in:</strong> <%= @person.wikidata_entity.work_location.name %>
       <% end %>
     </p>
 
-    <% if @person.wikidata_entity and @person.wikidata_entity.alma_maters.size > 0 %>
-      <h2>Alma Mater<%= @person.wikidata_entity.alma_maters.size > 1 ? "s" : "" %></h2>
+    <% if has_wikidata_entry? %>
+      <h2><%= pluralize @person.wikidata_entity.alma_maters.size, "Alma Mater" %></h2>
       <p class="attribution">Source: <%= link_to "Wikidata", @person.wikidata_uri.to_s %></p>
       <% if @person.wikidata_entity.alma_maters.size > 1 %>
         <ul>
@@ -70,26 +73,28 @@
     <% end %>
   <% end %>
 
-  <% if @person.wikidata_uri and @person.wikidata_entity.notable_works.size > 0 %>
+  <% if has_noteable_works? %>
     <h2>Notable Works</h2>
     <p class="attribution">Source: <%= link_to "Wikidata", @person.wikidata_uri.to_s %></p>
     <%= render partial: "collection", locals: { collection: @person.wikidata_entity.notable_works } %>
   <% end %>
 
-  <% if @person.dbpedia_uri and @person.dbpedia_resource.film_appearances.size > 0 %>
+  <% if has_film_appearances? %>
     <h2>Film Appearances</h2>
     <p class="attribution">Source: <%= link_to "DBPedia", @person.dbpedia_uri.to_s %></p>
     <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.film_appearances } %>
   <% end %>
 
-  <% if @person.dbpedia_uri and (@person.dbpedia_resource.influences.size > 0 or @person.dbpedia_resource.influencees.size > 0) %>
+  <% if intellectual_network? %>
     <h2>Intellectual Network</h2>
     <p class="attribution">Source: <%= link_to "DBPedia", @person.dbpedia_uri.to_s %></p>
-    <% if @person.dbpedia_resource.influences.size > 0 %>
+
+    <% if has_influences? %>
       <h3>Influences</h3>
       <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.influences } %>
     <% end %>
-    <% if @person.dbpedia_resource.influencees.size > 0 %>
+
+    <% if has_influencees? %>
       <h3>Influenced</h3>
       <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.influencees } %>
     <% end %>
@@ -99,14 +104,8 @@
   <p>
     <%= link_to @person.loc_uri.to_s, @person.loc_uri.to_s %><br>
     <%= link_to @person.subject.to_s, @person.subject.to_s %><br>
-    <% if @person.getty_uri %>
-      <%= link_to @person.getty_uri.to_s, @person.getty_uri.to_s %><br>
-    <% end %>
-    <% if @person.wikidata_uri %>
-      <%= link_to @person.wikidata_uri.to_s, @person.wikidata_uri.to_s %><br>
-    <% end %>
-    <% if @person.dbpedia_uri %>
-      <%= link_to @person.dbpedia_uri.to_s, @person.dbpedia_uri.to_s %><br>
-    <% end %>
+    <%= link_to_if @person.getty_uri, @person.getty_uri.to_s, @person.getty_uri.to_s %><br>
+    <%= link_to_if @person.wikidata_uri, @person.wikidata_uri.to_s, @person.wikidata_uri.to_s %><br>
+    <%= link_to_if @person.dbpedia_uri, @person.dbpedia_uri.to_s, @person.dbpedia_uri.to_s %><br>
   </p>
 <% end %>
