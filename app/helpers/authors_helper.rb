@@ -2,7 +2,11 @@ module AuthorsHelper
 
   def parse_date(datestr)
     begin
-      datestr.match(/^-*\d{1,4}-\d{1,2}-\d{1,2}$/) ? Date.parse(datestr).strftime("%B %-d, %Y") : datestr
+      if datestr.match(/^-*\d{1,4}-\d{1,2}-\d{1,2}$/)
+        Date.parse(datestr).strftime("%B %-d, %Y")
+      else
+        datestr
+      end
     rescue
       datestr
     end
