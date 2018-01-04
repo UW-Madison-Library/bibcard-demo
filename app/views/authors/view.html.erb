@@ -64,11 +64,11 @@
       <% if has_alma_maters? && @person.wikidata_entity.alma_maters.size > 1 %>
         <ul>
           <% @person.wikidata_entity.alma_maters.each do |school| %>
-            <li><%= render partial: "school", locals: { school: school } %></li>
+            <li><%= render partial: "school", object: school %></li>
           <% end %>
         </ul>
       <% elsif has_alma_maters? %>
-        <p><%= render partial: "school", locals: { school: @person.wikidata_entity.alma_maters.first } %></p>
+        <p><%= render partial: "school", object: @person.wikidata_entity.alma_maters.first %></p>
       <% end %>
     <% end %>
   <% end %>
@@ -76,13 +76,13 @@
   <% if has_noteable_works? %>
     <h2>Notable Works</h2>
     <p class="attribution">Source: <%= link_to "Wikidata", @person.wikidata_uri.to_s %></p>
-    <%= render partial: "collection", locals: { collection: @person.wikidata_entity.notable_works } %>
+    <%= render partial: "collection", object: @person.wikidata_entity.notable_works %>
   <% end %>
 
   <% if has_film_appearances? %>
     <h2>Film Appearances</h2>
     <p class="attribution">Source: <%= link_to "DBPedia", @person.dbpedia_uri.to_s %></p>
-    <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.film_appearances } %>
+    <%= render partial: "collection", object: @person.dbpedia_resource.film_appearances %>
   <% end %>
 
   <% if intellectual_network? %>
@@ -91,12 +91,12 @@
 
     <% if has_influences? %>
       <h3>Influences</h3>
-      <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.influences } %>
+      <%= render partial: "collection", object: @person.dbpedia_resource.influences %>
     <% end %>
 
     <% if has_influencees? %>
       <h3>Influenced</h3>
-      <%= render partial: "collection", locals: { collection: @person.dbpedia_resource.influencees } %>
+      <%= render partial: "collection", object: @person.dbpedia_resource.influencees %>
     <% end %>
   <% end %>
 
