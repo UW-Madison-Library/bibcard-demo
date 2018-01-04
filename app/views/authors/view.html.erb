@@ -11,7 +11,7 @@
       <p>
         <strong>Description from Getty Linked Open Data:</strong>
         <%= @person.getty_subject.scope_note.value %>
-        <% if @person.getty_subject.scope_note.sources.size > 0 %>
+        <% if @person.getty_subject.scope_note.sources.any? %>
           (Sources: <%= @person.getty_subject.scope_note.sources.map(&:short_title).join("; ") %>)
         <% end %>
       </p>

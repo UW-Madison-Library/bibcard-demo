@@ -51,23 +51,23 @@ module AuthorsHelper
   end
 
   def has_alma_maters?
-    @person && @person.wikidata_entity && @person.wikidata_entity.alma_maters.size > 0
+    @person && @person.wikidata_entity && @person.wikidata_entity.alma_maters.any?
   end
 
   def has_influences?
-    @person && @person.dbpedia_resource.influences.size > 0
+    @person && @person.dbpedia_resource.influences.any?
   end
 
   def has_influencees?
-    @person && @person.dbpedia_resource.influencees.size > 0
+    @person && @person.dbpedia_resource.influencees.any?
   end
 
   def has_film_appearances?
-    @person && @person.dbpedia_uri && @person.dbpedia_resource.film_appearances.size > 0
+    @person && @person.dbpedia_uri && @person.dbpedia_resource.film_appearances.any?
   end
 
   def has_noteable_works?
-    @person && @person.wikidata_uri && @person.wikidata_entity.notable_works.size > 0
+    @person && @person.wikidata_uri && @person.wikidata_entity.notable_works.any?
   end
 
   def intellectual_network?
