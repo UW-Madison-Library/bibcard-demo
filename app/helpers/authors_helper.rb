@@ -25,7 +25,7 @@ module AuthorsHelper
   end
 
   def has_relevant_wikidata?
-    has_wikidata_description or
+    has_wikidata_description? or
     has_noteable_works? or
     has_wikidata_work_location? or
     has_alma_maters?
@@ -47,7 +47,7 @@ module AuthorsHelper
   end
 
   def has_dbpedia_abstract?
-    @person && @person.dbpedia_uri and @person.dbpedia_resource.abstract
+    @person && @person.dbpedia_uri && @person.dbpedia_resource && @person.dbpedia_resource.abstract
   end
 
   def has_alma_maters?
@@ -55,15 +55,15 @@ module AuthorsHelper
   end
 
   def has_influences?
-    @person && @person.dbpedia_resource.influences.any?
+    @person && @person.dbpedia_resource && @person.dbpedia_resource.influences.any?
   end
 
   def has_influencees?
-    @person && @person.dbpedia_resource.influencees.any?
+    @person && @person.dbpedia_resource &&@person.dbpedia_resource.influencees.any?
   end
 
   def has_film_appearances?
-    @person && @person.dbpedia_uri && @person.dbpedia_resource.film_appearances.any?
+    @person && @person.dbpedia_uri && @person.dbpedia_resource && @person.dbpedia_resource.film_appearances.any?
   end
 
   def has_noteable_works?
