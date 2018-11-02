@@ -51,6 +51,7 @@ GEM
     arel (6.0.4)
     binding_of_caller (0.7.3)
       debug_inspector (>= 0.0.1)
+    brakeman (4.3.1)
     builder (3.2.3)
     byebug (9.1.0)
     coffee-rails (4.1.1)
@@ -217,6 +218,7 @@ PLATFORMS
 
 DEPENDENCIES
   bib_card (~> 0.4.8)!
+  brakeman
   byebug
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
@@ -230,4 +232,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.15.0
+   1.16.6
