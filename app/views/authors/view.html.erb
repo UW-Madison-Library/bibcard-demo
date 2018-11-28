@@ -6,7 +6,7 @@
   <% if has_getty_scope_note? %>
     <div>
       <% if has_dbpedia_thumbnail? %>
-        <%= image_tag(@person.dbpedia_resource.thumbnail, width: "200px", alt: "Depiction of #{@person.name}", style: "float: right;") %>
+        <%= image_tag(@person.dbpedia_resource.thumbnail.to_s, width: "200px", alt: "Depiction of #{@person.name}", style: "float: right;") %>
       <% end %>
       <p>
         <strong>Description from Getty Linked Open Data:</strong>
@@ -24,7 +24,7 @@
   <% if has_wikidata_description? or has_dbpedia_abstract? %>
 
     <% if has_dbpedia_thumbnail? and ! has_getty_scope_note? %>
-      <%= image_tag(@person.dbpedia_resource.thumbnail, width: "200px", alt: "Depiction of #{@person.name}", style: "float: right;") %>
+      <%= image_tag(@person.dbpedia_resource.thumbnail.to_s, width: "200px", alt: "Depiction of #{@person.name}", style: "float: right;") %>
     <% end %>
 
     <% if has_dbpedia_abstract? %>
