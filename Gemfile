@@ -21,6 +21,7 @@ gem "bib_card", "~> 0.4.8", git: "https://github.com/UW-Madison-Library/bibcard.
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'puma'
 end
 
 group :development do
