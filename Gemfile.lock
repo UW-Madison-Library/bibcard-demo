@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/UW-Madison-Library/bibcard.git
-  revision: c75cb29b33af4ffaf8930c225f3f50110fe7f1d1
+  revision: c6ac2f213d9bd10ddda27d3594da0246531d1256
   specs:
-    bib_card (0.4.9)
+    bib_card (0.4.10)
       equivalent-xml (~> 0.6)
       nokogiri (>= 1.6.3)
       rdf (~> 3.0, >= 3.0.1)
@@ -99,7 +99,7 @@ GEM
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (0.9.2)
-    mime-types (3.3)
+    mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.1009)
     mimemagic (0.3.3)
@@ -144,7 +144,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    rdf (3.1.0)
+    rdf (3.1.1)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (3.1.0)
@@ -162,7 +162,7 @@ GEM
       rdf (>= 2.2, < 4.0)
       rdf-rdfa (>= 2.2, < 4.0)
       rdf-xsd (>= 2.2, < 4.0)
-    rdf-vocab (3.1.0)
+    rdf-vocab (3.1.2)
       rdf (~> 3.1)
     rdf-xsd (3.1.0)
       rdf (~> 3.1)
@@ -214,7 +214,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bib_card (~> 0.4.8)!
+  bib_card (~> 0.4.10)!
   byebug
   coffee-rails (~> 4.2.2)
   jquery-rails
