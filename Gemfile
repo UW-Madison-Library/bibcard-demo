@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.2.2'
 gem 'jquery-rails'
 
 # BibCard is the gem being demonstrated by this simple app.
-gem "bib_card", "~> 0.4.10", git: "https://github.com/UW-Madison-Library/bibcard.git"
+gem "bib_card", "~> 0.5.0", git: "https://github.com/UW-Madison-Library/bibcard.git"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
